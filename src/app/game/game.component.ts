@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Game } from 'src/models/game';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
 
@@ -30,6 +30,8 @@ export class GameComponent {
     if (!this.pickCardAnimation) {
       this.currentCard = this.game.stack.pop();
       this.pickCardAnimation = true;
+      this.game.currentPlayer++;
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 
       setTimeout(() => {
         this.game.playedCards.push(this.currentCard);
@@ -41,7 +43,10 @@ export class GameComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(name => {
+      if (name && name.length > 0) {
+        this.game.players.push(name);
+      }
     });
   }
 }

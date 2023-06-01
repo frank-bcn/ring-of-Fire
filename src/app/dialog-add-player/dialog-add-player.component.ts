@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-dialog-add-player',
@@ -6,5 +8,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./dialog-add-player.component.scss']
 })
 export class DialogAddPlayerComponent {
+  name: string = "";
 
+  constructor(public dialogRef: MatDialogRef<DialogAddPlayerComponent>) {this.dialogRef = dialogRef;}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }
+
